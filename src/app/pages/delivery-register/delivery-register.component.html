@@ -1,0 +1,123 @@
+<div class="w-full max-w-md">
+
+    <div *ngIf="show_toast" class="fixed top-4 left-0 w-full z-50 flex justify-center">
+        <div [ngClass]="{
+      'bg-teal-600': register_type === 'success',
+      'bg-red-500': register_type === 'error'
+    }" class="text-white px-6 py-3 rounded shadow-md w-full max-w-md mx-auto flex justify-between items-center animate-slide-down">
+            <p class="text-lg text-center font-semibold" *ngIf="register_type==='error'">{{ error_message }}</p>
+            <p class="text-lg text-center font-semibold" *ngIf="register_type==='success'">{{ success_message }}</p>
+        </div>
+    </div>
+</div>
+
+
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div class="w-full max-w-xl space-y-6">
+
+        <div class="flex flex-col items-center gap-4">
+
+            <div class="w-16 h-16 rounded-2xl bg-teal-600 flex items-center justify-center shadow-lg">
+                <svg class="w-10 h-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M5 8.25V17.25C5 18.0494 5.67157 18.75 6.5 18.75H17.5C18.3284 18.75 19 18.0494 19 17.25V8.25M5 8.25H19M5 8.25L12 3.75L19 8.25" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 12V22" />
+                </svg>
+            </div>
+
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-gray-900">Zandooo!!</h1>
+                <p class="text-gray-500 mt-1">Create your delivery account</p>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-8">
+
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold text-gray-900">Sign Up</h2>
+                <p class="text-gray-500 text-sm mt-1">Join our delivery community</p>
+            </div>
+
+            <div>
+                <form class="space-y-4" [formGroup]="deliveryRegisterForm" (ngSubmit)="onSubmit()">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label for="FirstName" class="block text-sm font-medium text-gray-700">First Name</label>
+                            <input formControlName="first_name" id="FirstName" placeholder="John" required
+                                class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                        </div>
+                        <div class="space-y-2">
+                            <label for="LastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+                            <input formControlName="last_name" id="LastName" placeholder="Doe" required
+                                class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label for="UserName" class="block text-sm font-medium text-gray-700">Username</label>
+                            <input formControlName="username" id="UserName" placeholder="johnny.d" required
+                                class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                        </div>
+                        <div class="space-y-2">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                            <input formControlName="email" id="email" type="email" placeholder="you@example.com"
+                                required
+                                class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                        </div>
+                    </div>
+                    <div formGroupName="delivery_Agent_Profile">
+                        <div class="space-y-2">
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                            <input formControlName="phone_number" id="phone" type="tel" placeholder="+1234567890"
+                                required
+                                class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label for="Deliverystarttime" class="block text-sm font-medium text-gray-700">Delivery
+                                    Start Time</label>
+                                <input formControlName="delivery_start_time" id="Deliverystarttime" type="time" required
+                                    class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                            </div>
+                            <div class="space-y-2">
+                                <label for="Deliveryendtime" class="block text-sm font-medium text-gray-700">Delivery
+                                    End
+                                    Time</label>
+                                <input formControlName="delivery_end_time" id="Deliveryendtime" type="time" required
+                                    class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="adress" class="block text-sm font-medium text-gray-700">Adress</label>
+                            <input formControlName="adress" id="address" placeholder="123 Main St, City, Country"
+                                required
+                                class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input formControlName="password" id="password" type="password" placeholder="••••••••" required
+                            class="border border-gray-300 rounded-lg p-2 w-full focus:ring-2 focus:ring-teal-600 focus:border-teal-600" />
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md mt-6">
+                        Create Account
+                    </button>
+                </form>
+
+                <div class="mt-4 text-center text-sm">
+                    <span class="text-gray-500">Already have an account? </span>
+                    <a href="/login" class="text-teal-600 hover:underline font-medium">
+                        Sign in
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
