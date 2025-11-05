@@ -4,4 +4,11 @@ export interface Register_User_Data {
     username: string;
     email: string;
     password: string;
+    delivery_Agent_Profile?: {
+        id: number,
+        adress: string,
+        delivery_start_time: string,
+        delivery_end_time: string,
+        phone_number: string,
+    }
 }
