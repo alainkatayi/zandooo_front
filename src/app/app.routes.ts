@@ -21,4 +21,9 @@ export const routes: Routes = [
         title: 'Register',
         loadComponent: () => import('./pages/delivery-register/delivery-register.component').then(m => m.DeliveryRegisterComponent)
     },
+    {
+        path: 'admin/dashboard',
+        title: 'ADMIN',
+        loadComponent: () => import('./pages/admin/dashboard/dashboard.component').then(m => m.DashboardComponent)
+    },
 ];
