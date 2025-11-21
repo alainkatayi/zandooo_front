@@ -11,4 +11,12 @@ export class UserLocalService {
   store_user_local(data:LoginResponse){
     localStorage.setItem(SESSION_KEY,JSON.stringify(data))
   }
+
+  get_user_local():LoginResponse | null {
+    if(typeof localStorage === 'undefined'){
+      return null
+    }
+    const data_user = localStorage.getItem(SESSION_KEY)
+    return data_user ? JSON.parse(data_user) as LoginResponse : null
+  }
 }
