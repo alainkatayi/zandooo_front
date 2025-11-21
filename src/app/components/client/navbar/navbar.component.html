@@ -1,0 +1,72 @@
+<nav class="w-full bg-white border-b border-gray-200 p-3 md:p-4 sticky top-0 z-10 shadow-sm">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+
+        <div class="flex items-center shrink-0">
+            <a href="/" class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-xl bg-teal-600 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M5 8.25V17.25C5 18.0494 5.67157 18.75 6.5 18.75H17.5C18.3284 18.75 19 18.0494 19 17.25V8.25M5 8.25H19M5 8.25L12 3.75L19 8.25" />
+                    </svg>
+                </div>
+                <h2 class="font-bold text-xl text-gray-900 hidden sm:block">Zandooo!!</h2>
+            </a>
+        </div>
+
+        <div class="flex items-center w-full max-w-lg lg:max-w-3xl space-x-2">
+
+            <div class="relative grow">
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <input type="search" placeholder="Search for shops, products, or categories..."
+                    class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-xl focus:border-teal-600 focus:ring-1 focus:ring-teal-600 transition duration-150 text-sm" />
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 shrink-0">
+
+            <div *ngIf="user_data != null" class="flex items-center gap-4">
+
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                    </svg>
+                </a>
+
+
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z" />
+                    </svg>
+                </a>
+                <a href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-7">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                </a>
+            </div>
+            <div *ngIf="user_data == null" class="flex items-center gap-3">
+                <a href="register"
+                    class="hidden md:block text-sm font-medium text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-150">
+                    Sign In
+                </a>
+
+                <a href="login"
+                    class="text-sm font-semibold text-white bg-teal-600 px-4 py-2 rounded-lg hover:bg-teal-700 transition duration-150 shadow-md">
+                    Log in
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
