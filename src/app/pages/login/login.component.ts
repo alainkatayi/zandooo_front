@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,7 +7,8 @@ import {
 } from '@angular/forms';
 import { LoginService } from '../../../core/services/login_service/login.service';
 import { CommonModule, NgIf } from '@angular/common';
-
+import { UserLocalService } from '../../../core/services/user_local_service/user-local.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -22,9 +23,10 @@ export class LoginComponent {
   success_message:string = ''
   login_type:'error'| 'success' = 'success'
   show_toast:Boolean = false
+  private router = inject(Router);
 
 
-  constructor(private fb: FormBuilder, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, private loginService: LoginService,private user_local_service:UserLocalService) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -36,6 +38,7 @@ export class LoginComponent {
     const loginData = this.loginForm.value
     this.loginService.login(loginData).subscribe({
       next: (response) => {
+      this.user_local_service.store_user_local(response)
       this.is_connecting = false
       this.show_toast = true
       this.login_type = 'success'
@@ -43,6 +46,7 @@ export class LoginComponent {
       console.log('Login successful', response)
       setTimeout(()=>{
         this.show_toast = false
+        this.router.navigate(['/explorer'])
       },2000)
       },
       error: (error) => {
