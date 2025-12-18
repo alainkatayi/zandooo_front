@@ -21,6 +21,13 @@ export const routes: Routes = [
         title: 'Register',
         loadComponent: () => import('./pages/delivery-register/delivery-register.component').then(m => m.DeliveryRegisterComponent)
     },
+
+    {
+        path: 'shop/overview',
+        title: '0verview',
+        loadComponent: () => import('./pages/shop/overview/overview.component').then(m => m.OverviewComponent)
+    },
+
     {
         path: 'admin/dashboard',
         title: 'ADMIN',
