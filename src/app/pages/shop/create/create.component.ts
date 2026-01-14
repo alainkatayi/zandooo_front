@@ -5,6 +5,7 @@ import { ShopService } from '../../../../core/services/shop_service/shop.service
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgClass, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -102,15 +103,15 @@ export class CreateComponent {
         this.logoPreview = null
       },
 
-      error: (error) => {
+      error: (error:HttpErrorResponse) => {
         this.isSubmited = false
         this.toastType = 'error'
         this.showToast = true
-        this.toastMessage = error
+        this.toastMessage = error.error?.Erreur
         setTimeout(()=>{
           this.showToast = false
         },2000)
-        console.log('error', error)
+        console.log(error)
       }
     })
   }

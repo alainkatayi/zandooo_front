@@ -27,6 +27,16 @@ export const routes: Routes = [
         title: '0verview',
         loadComponent: () => import('./pages/shop/overview/overview.component').then(m => m.OverviewComponent)
     },
+    {
+        path: 'shop/create',
+        title: 'create',
+        loadComponent: () => import('./pages/shop/create/create.component').then(m => m.CreateComponent)
+    },
+    {
+        path: 'shop/explorer',
+        title: 'Explorer',
+        loadComponent: () => import('./pages/shop/explorer/explorer.component').then(m => m.ExplorerComponent)
+    },
 
     {
         path: 'admin/dashboard',

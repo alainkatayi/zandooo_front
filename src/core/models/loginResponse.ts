@@ -8,6 +8,7 @@ export interface LoginResponse {
         last_name:string,
         email:string,
         role:string,
+        has_shop: boolean,
         delivery_Agent_Profile?:{
             id:number,
             adress:string,
