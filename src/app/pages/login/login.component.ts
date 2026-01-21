@@ -46,7 +46,7 @@ export class LoginComponent {
       console.log('Login successful', response)
       setTimeout(()=>{
         this.show_toast = false
-        this.router.navigate(['/explorer'])
+        this.router.navigate(['/shop/explorer'])
       },2000)
       },
       error: (error) => {
