@@ -24,4 +24,9 @@ export class ShopService {
     const headers = this.userLocalService.getAuthHeaders()
     return this.http.post<Shop>(this.apiUrl +'shops/store/', data,{headers})
   }
+
+  getShopByOwner():Observable<Shop>{
+    const  headers = this.userLocalService.getAuthHeaders()
+    return this.http.get<Shop>(`${this.apiUrl}shops/my-shop/`, {headers})
+  }
 }

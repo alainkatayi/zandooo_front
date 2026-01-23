@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 
-<div class="flex-1 flex items-center justify-center my-12 md:my-20 px-4">
+<div *ngIf="!has_shop" class="flex-1 flex items-center justify-center my-12 md:my-20 px-4">
     
     <div class="max-w-md mx-auto border-slate-100 overflow-hidden">
         <div class="p-8 text-center">
@@ -26,6 +26,91 @@
         </div>
     </div>
 
+</div>
+
+<div *ngIf="has_shop" class="max-w-7xl mx-auto px-4 py-8 md:py-12">
+    
+    <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 mb-8">
+        <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div class="w-24 h-24 bg-teal-50 rounded-2xl shrink-0 flex items-center justify-center overflow-hidden border border-teal-100">
+                <img *ngIf="url + myShop?.logo; else noLogo" [src]="url + myShop?.logo" class="w-full h-full object-cover">
+                <ng-template #noLogo>
+                    <span class="text-3xl font-bold text-teal-600">{{ myShop?.name?.charAt(0) }}</span>
+                </ng-template>
+            </div>
+
+            <div class="flex-1 text-center md:text-left">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-900">{{ myShop?.name }}</h1>
+                        <p class="text-slate-500 mt-1 flex items-center justify-center md:justify-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            {{ myShop?.adress }}
+                        </p>
+                    </div>
+                    <div class="flex gap-3 justify-center">
+                        <button class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                            Modifier
+                        </button>
+                        <a href="/shop/view" class="px-4 py-2 text-sm font-medium text-white bg-teal-600 rounded-lg hover:bg-teal-700 shadow-sm shadow-teal-100">
+                            Voir en ligne
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 border-t border-slate-50 pt-6">
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">Statut</p>
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
+                            Ouvert
+                        </span>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-400 uppercase font-semibold">Horaires</p>
+                        <p class="text-sm font-medium text-slate-700 mt-1">{{ myShop?.opening_hours }} - {{ myShop?.closing_hours }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+            <div class="w-10 h-10 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">Produits</h3>
+            <p class="text-slate-500 text-sm mt-1">Gérez votre inventaire et ajoutez de nouveaux articles.</p>
+            <a href="#" class="mt-4 inline-block text-teal-600 text-sm font-semibold hover:text-teal-700">Gérer l'inventaire →</a>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+            <div class="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">Ventes</h3>
+            <p class="text-slate-500 text-sm mt-1">Consultez vos rapports de ventes et vos revenus.</p>
+            <a href="#" class="mt-4 inline-block text-teal-600 text-sm font-semibold hover:text-teal-700">Voir les rapports →</a>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+            <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-slate-900">Horaires</h3>
+            <p class="text-slate-500 text-sm mt-1">Ajustez vos heures d'ouverture et vos jours de fermeture.</p>
+            <a href="#" class="mt-4 inline-block text-teal-600 text-sm font-semibold hover:text-teal-700">Modifier les horaires →</a>
+        </div>
+    </div>
 </div>
 
 <app-footer></app-footer>
