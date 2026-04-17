@@ -5,7 +5,6 @@ import { UserLocalService } from '../user_local_service/user-local.service';
 import { Observable } from 'rxjs';
 import { Product } from '../../models/product';
 import { Shop } from '../../models/shop';
-import { ProductPagination } from '../../models/pagination';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +27,12 @@ export class ProductService {
       .set('page_size', page_size.toString())
 
     return this.http.get<Product[]>(`${this.apiUrl}products/my-product/`, {params, headers})
+
+  }
+
+  deleteProduct(id:number){
+    const headers = this.userLocalService.getAuthHeaders()
+    return this.http.delete(this.apiUrl + 'products/' + id + '/delete/', {headers})
 
   }
 }
