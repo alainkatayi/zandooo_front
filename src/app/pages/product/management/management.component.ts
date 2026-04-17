@@ -18,6 +18,8 @@ export class ManagementComponent {
   next_page_url : string | null = null
   prev_page_url : string | null = null
   total_count = 0
+  productId:number = -1
+  DeleteModalOpen:boolean = false
   constructor(private productService:ProductService){}
 
   ngOnInit(){
@@ -37,5 +39,31 @@ export class ManagementComponent {
         console.log("ERROR", error)
       }
     })
+  }
+
+  deleteProduct(){
+    this.productService.deleteProduct(this.productId).subscribe({
+      next:(response)=>{
+         window.location.reload()
+         console.log(response)
+      },
+      error:(error)=>{
+        console.log(error)
+      }
+    })
+  }
+
+  openDeleteModal(id:number){
+    this.DeleteModalOpen = true
+    this.productId = id
+  }
+
+  confirmDelete(){
+    this.deleteProduct()
+    this.closeDeleteModal()
+  }
+
+  closeDeleteModal(){
+    this.DeleteModalOpen = false
   }
 }
