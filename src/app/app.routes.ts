@@ -47,6 +47,11 @@ export const routes: Routes = [
         title: 'Product',
         loadComponent: () => import('./pages/product/create/create.component').then(m => m.CreateComponent)
     },
+    {
+        path: 'catalog',
+        title: 'Catalog',
+        loadComponent: () => import('./pages/catalog/catalog.component').then(m => m.CatalogComponent)
+    },
 
     {
         path: 'admin/dashboard',
