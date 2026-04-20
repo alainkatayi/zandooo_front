@@ -12,20 +12,20 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, NgIf,CommonModule],
+  imports: [ReactiveFormsModule, NgIf, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  is_connecting:Boolean = false
-  show_toast:Boolean = false
-  toastType: 'success' | 'error'= 'success'
+  is_connecting: Boolean = false
+  show_toast: Boolean = false
+  toastType: 'success' | 'error' = 'success'
   toastMessage: string = ''
   private router = inject(Router);
 
 
-  constructor(private fb: FormBuilder, private loginService: LoginService,private user_local_service:UserLocalService) {
+  constructor(private fb: FormBuilder, private loginService: LoginService, private user_local_service: UserLocalService) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
@@ -33,31 +33,43 @@ export class LoginComponent {
   }
 
   onSubmit() {
-    this.is_connecting = true
-    const loginData = this.loginForm.value
-    this.loginService.login(loginData).subscribe({
-      next: (response) => {
-      this.user_local_service.store_user_local(response)
-      this.is_connecting = false
+    if (this.loginForm.valid) {
+      this.is_connecting = true
+      const loginData = this.loginForm.value
+      this.loginService.login(loginData).subscribe({
+        next: (response) => {
+          this.user_local_service.store_user_local(response)
+          this.is_connecting = false
+          this.show_toast = true
+          this.toastType = 'success'
+          this.toastMessage = 'Login successful'
+          console.log('Login successful', response)
+          setTimeout(() => {
+            this.show_toast = false
+            this.router.navigate(['/catalog'])
+          }, 2000)
+        },
+        error: (error) => {
+          this.is_connecting = false
+          this.show_toast = true
+          this.toastType = 'error'
+          this.toastMessage = 'Username or password is incorrect'
+          console.error('Login failed', error);
+          setTimeout(() => {
+            this.show_toast = false
+          }, 2000)
+        }
+      })
+    }
+    else {
+      console.error('Form is invalid');
       this.show_toast = true
-      this.toastType = 'success'
-      this.toastMessage = 'Login successful'
-      console.log('Login successful', response)
-      setTimeout(()=>{
+      this.toastType = 'error'
+      this.toastMessage = 'Please fill all required fields'
+      setTimeout(() => {
         this.show_toast = false
-        this.router.navigate(['/catalog'])
-      },2000)
-      },
-      error: (error) => {
-        this.is_connecting = false
-        this.show_toast = true
-        this.toastType = 'error'
-        this.toastMessage = 'Username or password is incorrect'
-        console.error('Login failed', error);
-        setTimeout(()=>{
-          this.show_toast = false
-        },2000)
-      }
-    })
+      }, 2000);
+    }
+
   }
 }
