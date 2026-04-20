@@ -12,9 +12,8 @@ import { CommonModule } from '@angular/common';
 export class UserRegisterComponent {
   registerForm: FormGroup
   is_connecting: Boolean = false
-  error_message: string = ''
-  success_message: string = ''
-  register_type: 'error' | 'success' = 'success'
+  toastType: 'success' | 'error'= 'success'
+  toastMessage: string = ''
   show_toast: Boolean = false
 
   constructor(private fb: FormBuilder, private registerService: RegisterService) {
@@ -34,8 +33,8 @@ export class UserRegisterComponent {
         next: (response) => {
           this.is_connecting = false
           this.show_toast = true
-          this.register_type = 'success'
-          this.success_message = 'User registered successfully'
+          this.toastType = 'success'
+          this.toastMessage = 'User registered successfully'
           setTimeout(() => {
             this.show_toast = false
           }, 2000);
@@ -44,8 +43,8 @@ export class UserRegisterComponent {
         error: (error) => {
           this.is_connecting = false
           this.show_toast = true
-          this.register_type = 'error'
-          this.error_message = 'Error registering user'
+          this.toastType = 'error'
+          this.toastMessage = 'Error registering user'
           setTimeout(() => {
             this.show_toast = false
           }, 2000);
@@ -57,8 +56,8 @@ export class UserRegisterComponent {
     else {
       console.error('Form is invalid');
       this.show_toast = true
-      this.register_type = 'error'
-      this.error_message = 'Please fill all required fields'
+      this.toastType = 'error'
+      this.toastMessage = 'Please fill all required fields'
       setTimeout(() => {
         this.show_toast = false
       }, 2000);
