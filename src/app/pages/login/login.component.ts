@@ -19,10 +19,9 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm: FormGroup;
   is_connecting:Boolean = false
-  error_message:string = ''
-  success_message:string = ''
-  login_type:'error'| 'success' = 'success'
   show_toast:Boolean = false
+  toastType: 'success' | 'error'= 'success'
+  toastMessage: string = ''
   private router = inject(Router);
 
 
@@ -41,19 +40,19 @@ export class LoginComponent {
       this.user_local_service.store_user_local(response)
       this.is_connecting = false
       this.show_toast = true
-      this.login_type = 'success'
-      this.success_message = 'Login successful'
+      this.toastType = 'success'
+      this.toastMessage = 'Login successful'
       console.log('Login successful', response)
       setTimeout(()=>{
         this.show_toast = false
-        this.router.navigate(['/shop/explorer'])
+        this.router.navigate(['/catalog'])
       },2000)
       },
       error: (error) => {
         this.is_connecting = false
         this.show_toast = true
-        this.login_type = 'error'
-        this.error_message = 'username or password incorrect'
+        this.toastType = 'error'
+        this.toastMessage = 'Username or password is incorrect'
         console.error('Login failed', error);
         setTimeout(()=>{
           this.show_toast = false
