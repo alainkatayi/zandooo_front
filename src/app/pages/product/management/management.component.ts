@@ -20,6 +20,7 @@ export class ManagementComponent {
   total_count = 0
   productId:number = -1
   DeleteModalOpen:boolean = false
+  is_loading:Boolean = false
   constructor(private productService:ProductService){}
 
   ngOnInit(){
@@ -28,14 +29,17 @@ export class ManagementComponent {
 
 
   getProductByStore(page:number = 1){
+    this.is_loading = true
     this.current_page = page
     this.productService.getProductByShop(page, this.page_size).subscribe({
       next:(response)=>{
+        this.is_loading = false
         this.products = response
         console.log("produit",this.products)
         console.log("RESPONSE",response)
       },
       error:(error) =>{
+        this.is_loading = false
         console.log("ERROR", error)
       }
     })
