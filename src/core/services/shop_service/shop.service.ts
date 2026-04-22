@@ -25,6 +25,11 @@ export class ShopService {
     return this.http.post<Shop>(this.apiUrl +'shops/store/', data,{headers})
   }
 
+  editShop(data:FormData, id:number):Observable<Shop>{
+    const headers = this.userLocalService.getAuthHeaders()
+    return this.http.put<Shop>(this.apiUrl + 'shops/' + id + '/update', data, {headers})
+  }
+
   getShopByOwner():Observable<Shop>{
     const  headers = this.userLocalService.getAuthHeaders()
     return this.http.get<Shop>(`${this.apiUrl}shops/my-shop/`, {headers})
