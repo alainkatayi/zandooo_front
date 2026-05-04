@@ -13,10 +13,9 @@ import { CommonModule } from '@angular/common';
 export class DeliveryRegisterComponent {
   deliveryRegisterForm: FormGroup
   is_connecting: Boolean = false
-  error_message: string = ''
-  success_message: string = ''
-  register_type: 'error' | 'success' = 'success'
-  show_toast: Boolean = false
+  show_toast:Boolean = false
+  toastType: 'success' | 'error'= 'success'
+  toastMessage: string = ''
 
   constructor(private fb: FormBuilder, private register_delivery_service: RegisterService) {
     this.deliveryRegisterForm = this.fb.group({
@@ -41,9 +40,9 @@ export class DeliveryRegisterComponent {
       this.register_delivery_service.register(this.deliveryRegisterForm.value).subscribe({
         next: (res) => {
           this.is_connecting = false
-          this.register_type = 'success'
+          this.toastType = 'success'
           this.show_toast = true
-          this.success_message = "Delivery registered successfully"
+          this.toastMessage = "Delivery registered successfully"
           setTimeout(() => {
             this.show_toast = false
           }, 2000);
@@ -51,9 +50,9 @@ export class DeliveryRegisterComponent {
         },
         error: (err) => {
           this.is_connecting = false
-          this.register_type = 'error'
+          this.toastType = 'error'
           this.show_toast = true
-          this.error_message = "Error registering delivery"
+          this.toastMessage = "Error registering delivery"
           setTimeout(() => {
             this.show_toast = false
           }, 2000);
@@ -63,8 +62,8 @@ export class DeliveryRegisterComponent {
     }
     else {
       this.show_toast = true
-      this.register_type = 'error'
-      this.error_message = "Form is invalid"
+      this.toastType = 'error'
+      this.toastMessage = "Please fill all required fields"
       setTimeout(() => {
         this.show_toast = false
       }, 2000);

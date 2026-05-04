@@ -13,7 +13,7 @@ export class ShopService {
   private apiUrl = environment.url
   constructor(private http : HttpClient, private userLocalService:UserLocalService) { }
 
-  getAllShops(page:number = 1, page_size = 6):Observable<ShopPagination>{
+  getAllShops(page:number = 1, page_size = 10):Observable<ShopPagination>{
     let params = new HttpParams()
       .set('page',page.toString())
       .set('page_size',page_size.toString())
@@ -23,6 +23,11 @@ export class ShopService {
   createShop(data:FormData):Observable<Shop>{
     const headers = this.userLocalService.getAuthHeaders()
     return this.http.post<Shop>(this.apiUrl +'shops/store/', data,{headers})
+  }
+
+  editShop(data:FormData, id:number):Observable<Shop>{
+    const headers = this.userLocalService.getAuthHeaders()
+    return this.http.put<Shop>(this.apiUrl + 'shops/' + id + '/update', data, {headers})
   }
 
   getShopByOwner():Observable<Shop>{

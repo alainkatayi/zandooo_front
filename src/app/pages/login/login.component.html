@@ -1,13 +1,38 @@
-<div class="w-full max-w-md">
+<div *ngIf="show_toast" class="fixed top-24 right-6 z-100 animate-slide-in-right">
 
-    <div *ngIf="show_toast" class="fixed top-4 left-0 w-full z-50 flex justify-center">
-        <div [ngClass]="{
-      'bg-teal-600': login_type === 'success',
-      'bg-red-500': login_type === 'error'
-    }" class="text-white px-6 py-3 rounded shadow-md w-full max-w-md mx-auto flex justify-between items-center animate-slide-down">
-            <p class="text-lg text-center font-semibold" *ngIf="login_type==='error'">{{ error_message }}</p>
-            <p class="text-lg text-center font-semibold" *ngIf="login_type==='success'">{{ success_message }}</p>
+    <div class="flex items-center gap-4 bg-white border-l-4 p-4 rounded-xl shadow-2xl min-w-[300px] max-w-sm border-slate-100"
+        [ngClass]="{
+           'border-l-teal-600': toastType === 'success',
+           'border-l-red-500': toastType === 'error'
+         }">
+
+        <div class="shrink-0">
+            <div [ngClass]="toastType === 'success' ? 'bg-teal-50' : 'bg-red-50'" class="p-2 rounded-full">
+                <svg *ngIf="toastType === 'success'" class="w-5 h-5 text-teal-600" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+                </svg>
+                <svg *ngIf="toastType === 'error'" class="w-5 h-5 text-red-500" fill="none" stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </div>
         </div>
+
+        <div class="flex-1">
+            <p class="text-sm font-bold text-slate-800">
+                {{ toastType === 'success' ? 'Confirmation' : 'Attention' }}
+            </p>
+            <p class="text-xs text-slate-500 font-medium leading-tight">
+                {{ toastMessage }}
+            </p>
+        </div>
+
+        <button (click)="show_toast = false" class="text-slate-300 hover:text-slate-500 transition-all">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M6 18L18 6M6 6l12 12" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
     </div>
 </div>
 
