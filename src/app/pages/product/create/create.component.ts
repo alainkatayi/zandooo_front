@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Component, inject, Inject } from '@angular/core';
 import { NavbarComponent } from "../../../components/client/navbar/navbar.component";
 import { ProductService } from '../../../../core/services/product_service/product.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,51 +8,56 @@ import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-create',
-  imports: [NavbarComponent,ReactiveFormsModule,NgIf,NgClass],
+  imports: [ReactiveFormsModule, NgIf, NgClass],
   templateUrl: './create.component.html',
   styleUrl: './create.component.css'
 })
 export class CreateComponent {
-  constructor(private productSerice:ProductService, private fb:FormBuilder){}
+  constructor(private productSerice: ProductService, private fb: FormBuilder) { }
 
-  productCreateForm!:FormGroup
-  imageFile!:File | null 
-  imagePreview:string | ArrayBuffer | null = null
-  showToast:Boolean = false
-  toastType: 'success' | 'error'= 'success'
+  productCreateForm!: FormGroup
+  imageFile!: File | null
+  imagePreview: string | ArrayBuffer | null = null
+  showToast: Boolean = false
+  toastType: 'success' | 'error' = 'success'
   toastMessage: string = ''
   errorMessage: string = ''
   successMessage: string = ''
-  isSubmited:Boolean = false
+  isSubmited: Boolean = false
+  private router = inject(Router)
 
 
-  ngOnInit(){
+
+
+  ngOnInit() {
     this.productCreateForm = this.fb.group({
-      name:['',[Validators.required]],
-      description:['',[Validators.required]],
-      price:[null,[Validators.required,Validators.min(0)]],
-      stock:[null,[Validators.required, Validators.min(0)]],
-      image:[null, [Validators.required]]
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      price: [null, [Validators.required, Validators.min(0)]],
+      stock: [null, [Validators.required, Validators.min(0)]],
+      image: [null, [Validators.required]]
     })
   }
 
-  onFileSelected(event:Event){
+  onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement
-    if(!input.files || input.files.length === 0){
+    if (!input.files || input.files.length === 0) {
       return
     }
     const file = input.files[0]
     this.imageFile = file
-
+    this.productCreateForm.patchValue({
+    image: file
+  });
     const reader = new FileReader()
-    reader.onload=()=>{
+    reader.onload = () => {
       this.imagePreview = reader.result
     }
     reader.readAsDataURL(file)
   }
 
-  onSubmit(){
-    this.isSubmited = true
+  onSubmit() {
+    
     if(this.productCreateForm.invalid){
       this.showToast = true
       this.toastType = 'error'
@@ -65,40 +71,57 @@ export class CreateComponent {
       return
     }
 
-    const formValue = this.productCreateForm.value
-    const formData = new FormData
+    if (this.productCreateForm.valid) {
+      this.isSubmited = true
+      const formValue = this.productCreateForm.value
+      const formData = new FormData
 
-    formData.append('name',formValue.name)
-    formData.append('description',formValue.description)
-    formData.append('price',formValue.price)
-    formData.append('stock', formValue.stock)
-    if(this.imageFile){
-      formData.append('image', this.imageFile)
+      formData.append('name', formValue.name)
+      formData.append('description', formValue.description)
+      formData.append('price', formValue.price)
+      formData.append('stock', formValue.stock)
+      if (this.imageFile) {
+        formData.append('image', this.imageFile)
+      }
+
+      this.productSerice.createProduct(formData).subscribe({
+        next: (response) => {
+          this.isSubmited = false
+          this.toastType = 'success'
+          this.toastMessage = " Product create successful"
+          this.showToast = true
+          setTimeout(() => {
+            this.showToast = false
+            this.router.navigate(['product/management'])
+          }, 2000)
+          console.log(response)
+          this.productCreateForm.reset()
+          this.imageFile = null
+          this.imagePreview = null
+        },
+        error: (error: HttpErrorResponse) => {
+          console.log(error.error)
+          this.showToast = true
+          this.toastType = 'error'
+          this.toastMessage = error.error?.Erreur
+          this.isSubmited = false
+          setTimeout(() => {
+            this.showToast = false
+          }, 2000)
+        }
+      })
+    }
+    else{
+      console.log(this.productCreateForm.setErrors)
+      console.log(this.productCreateForm.setValue)
+      this.isSubmited=false
+      this.showToast = true
+      this.toastType= 'error'
+      this.toastMessage = "Please fill all required fields"
+      setTimeout(()=>{
+        this.showToast = false
+      },2000)
     }
 
-    this.productSerice.createProduct(formData).subscribe({
-      next: (response)=>{
-        this.isSubmited = false
-        this.toastType = 'success'
-        this.toastMessage = "Shop créé avec succès"
-        this.showToast = true
-        setTimeout(()=>{
-          this.showToast = false
-        },2000)
-        console.log(response)
-        this.productCreateForm.reset()
-        this.imageFile = null 
-        this.imagePreview = null 
-      },
-      error: (error:HttpErrorResponse) =>{
-        console.log(error.error)
-        this.showToast = true
-        this.toastType = 'error'
-        this.toastMessage = error.error?.Erreur
-        setTimeout(()=>{
-          this.showToast = false
-        },2000)
-      }
-    })
   }
 }
